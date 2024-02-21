@@ -49,8 +49,31 @@ class RobotControllerTest {
             List.of(
                 new Movement(Direction.EAST, 1),
                 new Movement(Direction.NORTH, 3),
-                new Movement(Direction.WEST, 1),
-                new Movement(Direction.SOUTH, 3)
+                new Movement(Direction.WEST, 1)
+            ),
+            result
+        );
+    }
+
+    @Test
+    void moves_shouldReturnLocationsInShortestMoves() {
+        List<Movement> result = controller.processMoves(List.of(
+            new Position(0, 0), // First
+            new Position(1, 5), // Fifth
+            new Position(1, 0), // Second
+            new Position(0, 3), // Third
+            new Position(1, 3)  // Fourth
+        ));
+        assertEquals(
+            List.of(
+                new Movement(Direction.EAST, 1), // (1, 0)
+
+                new Movement(Direction.NORTH, 3),
+                new Movement(Direction.WEST, 1), // (0, 3)
+
+                new Movement(Direction.EAST, 1), // (1, 3)
+
+                new Movement(Direction.NORTH, 2) // (1, 5)
             ),
             result
         );

@@ -2,7 +2,6 @@ package org.jetbrains.assignment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public record Position(int x, int y) {
 
@@ -34,5 +33,9 @@ public record Position(int x, int y) {
         }
 
         return movements;
+    }
+
+    int manhattanDistanceTo(Position other) {
+        return Math.abs(other.x - x) + Math.abs(other.y - y);
     }
 }

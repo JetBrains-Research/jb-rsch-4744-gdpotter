@@ -18,4 +18,14 @@ class PositionTest {
         assertEquals(new Position(5, 2), new Position(4, 2).move(new Movement(Direction.EAST ,1)));
         assertEquals(new Position(5, 2), new Position(8, 2).move(new Movement(Direction.WEST ,3)));
     }
+
+    @Test
+    void manhattanDistanceTo_betweenPoints() {
+        assertEquals(0, new Position(5, 5).manhattanDistanceTo(new Position(5, 5)));
+        assertEquals(1, new Position(5, 5).manhattanDistanceTo(new Position(5, 6)));
+        assertEquals(1, new Position(5, 5).manhattanDistanceTo(new Position(5, 4)));
+        assertEquals(1, new Position(5, 5).manhattanDistanceTo(new Position(6, 5)));
+        assertEquals(1, new Position(5, 5).manhattanDistanceTo(new Position(4, 5)));
+        assertEquals(2, new Position(5, 5).manhattanDistanceTo(new Position(4, 4)));
+    }
 }

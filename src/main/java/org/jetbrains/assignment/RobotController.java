@@ -24,16 +24,18 @@ public class RobotController {
 
     @PostMapping("/moves")
     public List<Movement> processMoves(@RequestBody List<Position> positions) {
-        Queue<Position> queue = new ArrayDeque<>(positions);
+        List<Position> queue = new ArrayList<>(positions);
         if (queue.isEmpty()) {
             return Collections.emptyList();
         }
 
         List<Movement> movements = new ArrayList<>();
+        Position last = queue.remove(0);
 
-        Position last = queue.remove();
         while (!queue.isEmpty()) {
-            Position nextPosition = queue.remove();
+            Position finalLast = last;
+            Position nextPosition = Collections.min(queue, Comparator.comparingInt(finalLast::manhattanDistanceTo));
+            queue.remove(nextPosition);
             movements.addAll(last.movementTo(nextPosition));
             last = nextPosition;
         }
