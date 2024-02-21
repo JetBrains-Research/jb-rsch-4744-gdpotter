@@ -4,9 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class RobotController {
@@ -26,15 +24,16 @@ public class RobotController {
 
     @PostMapping("/moves")
     public List<Movement> processMoves(@RequestBody List<Position> positions) {
-        if (positions.isEmpty()) {
+        Queue<Position> queue = new ArrayDeque<>(positions);
+        if (queue.isEmpty()) {
             return Collections.emptyList();
         }
 
         List<Movement> movements = new ArrayList<>();
 
-        Position last = positions.remove(0);
-        while (!positions.isEmpty()) {
-            Position nextPosition = positions.remove(0);
+        Position last = queue.remove();
+        while (!queue.isEmpty()) {
+            Position nextPosition = queue.remove();
             movements.addAll(last.movementTo(nextPosition));
             last = nextPosition;
         }
